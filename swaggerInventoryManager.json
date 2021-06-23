@@ -1,0 +1,247 @@
+ {
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "My Hotel Management System",
+      "description": "My User Project Application API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:5001",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Manager",
+        "description": "API for Manager in the system"
+      }
+    ],
+    "paths": {
+
+        "/Manager/Inventory": {
+            "post": {
+                "tags": ["Inventory"],
+                "description": "Add new Inventory in system",
+                "parameters": [
+                  {
+                    "name": "Inventory",
+                    "in": "body",
+                    "description": "Inventory that we want to add",
+                    "schema": {
+                      "$ref": "#/definitions/Inventory"
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "description": "New Inventory is created",
+                    "schema": {
+                      "$ref": "#/definitions/Inventory"
+                    }
+                  }
+                }
+              },
+          "get": {
+            "tags": ["Inventory"],
+            "summary": "Get Inventory in system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Inventory"
+                }
+              }
+            }
+          }
+        },
+        "/Manager/Inventory/{id}": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of Inventory that we want to find",
+              "type": "string"
+            }
+          ],
+          "get": {
+            "summary": "Get Inventory with given ID",
+            "tags": ["Inventory"],
+            "responses": {
+              "200": {
+                "description": "InventoryFound",
+                "schema": {
+                  "$ref": "#/definitions/Invetory"
+                }
+              }
+            }
+          },
+          "delete": {
+            "summary": "Delete Inventory with given ID",
+            "tags": ["Inventory"],
+            "responses": {
+              "200": {
+                "description": "Inventory is deleted",
+                "schema": {
+                  "$ref": "#/definitions/Inventory"
+                }
+              }
+            }
+          },
+          "put": {
+            "summary": "Update Inventory with give ID",
+            "tags": ["Inventory"],
+            "parameters": [
+              {
+                "name": "Inventory",
+                "in": "body",
+                "description": "Inventory with new values of properties",
+                "schema": {
+                  "$ref": "#/definitions/Inventory"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Inventory is updated",
+                "schema": {
+                  "$ref": "#/definitions/Inventory"
+                }
+              }
+            }
+          }
+        },
+        "/Manager/Staff": {
+          "post": {
+              "tags": ["Staff"],
+              "description": "Add new Staff in system",
+              "parameters": [
+                {
+                  "name": "Staff",
+                  "in": "body",
+                  "description": "Staff that we want to add",
+                  "schema": {
+                    "$ref": "#/definitions/Staff"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "New Staff is created",
+                  "schema": {
+                    "$ref": "#/definitions/Staff"
+                  }
+                }
+              }
+            },
+        "get": {
+          "tags": ["Staff"],
+          "summary": "Get Manager in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Staff"
+              }
+            }
+          }
+        }
+      },
+      "/Manager/Staff/{id}": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of inventory that we want to find",
+            "type": "string"
+          }
+        ],
+        "get": {
+          "summary": "Get Inventory with given ID",
+          "tags": ["Staff"],
+          "responses": {
+            "200": {
+              "description": "InventoryFound",
+              "schema": {
+                "$ref": "#/definitions/Staff"
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Inventory with given ID",
+          "tags": ["Staff"],
+          "responses": {
+            "200": {
+              "description": "Inventory is deleted",
+              "schema": {
+                "$ref": "#/definitions/Staff"
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update inventory with give ID",
+          "tags": ["Staff"],
+          "parameters": [
+            {
+              "name": "Staff",
+              "in": "body",
+              "description": "Staff with new values of properties",
+              "schema": {
+                "$ref": "#/definitions/Staff"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Staff is updated",
+              "schema": {
+                "$ref": "#/definitions/Staff"
+              }
+            }
+          }
+        }
+      }
+
+
+    },
+    
+    "definitions":{
+      "Inventory": {
+        "properties": {
+          "roomNum": {
+            "type": "number"
+          },
+          "inventoryName": {
+            "type": "string"
+          },
+          "quantity":{
+              "type":"number"
+          }
+        }
+      },
+      "Staff":{
+        "properties":{
+          "staffName":{
+            "type": "string"
+          },
+          "email":{
+            "type": "string"
+          },
+          "age":{
+            "type": "integer"
+          },
+          "contactNum":{
+            "type": "integer"
+          }
+        }
+      }
+    }
+    
+  }
+  
+
+

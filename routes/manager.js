@@ -1,11 +1,9 @@
 const express = require("express");
-const app = express();
-const staff = require("../models/staff");
-const Inventory = require("../models/inventory");
 const bodyParser = require("body-parser");
-
 const swaggerUi = require("swagger-ui-express"),
-swaggerDocument = require("../swagger.json");
+ swaggerDocument = require("../swaggerInventoryManager.json");
+
+const app = express();
 
 const {
   getStaff,
@@ -22,8 +20,14 @@ const {
   getInventoryById,
   postInventory,
   putInventory,
-  deleteInventory
+  deleteInventory,
 } = require("../controllers/inventory.js");
+
+const {
+  postManagerSignUp,
+  postManagerLogin,
+  checkToken,
+} = require("../controllers/managerLogin.js");
 
 const mongoose = require("mongoose");
 
@@ -37,15 +41,15 @@ mongoose.connect(
   )
   .then(() => console.log("Manager database connected"));
 
-app.get("/Manager/staff",getStaff );
+app.get("/Manager/Staff",getStaff );
 
-app.get("/Manager/staff/:id", getStaffById);
+app.get("/Manager/Staff/:id", getStaffById);
 
-app.post("/Manager/staff", postStaff);
+app.post("/Manager/Staff", postStaff);
 
-app.put("/Manager/staff/:id", putStaffById);
+app.put("/Manager/Staff/:id", putStaffById);
 
-app.delete("/Manager/staff/:id", deleteStaffById);
+app.delete("/Manager/Staff/:id", deleteStaffById);
 
 app.get("/Manager/Inventory", getInventory);
 
@@ -57,12 +61,16 @@ app.put("/Manager/Inventory/:id",putInventory);
 
 app.delete("/Manager/Inventory/:id", deleteInventory);
 
+app.post("/Manager/SignUp", postManagerSignUp);
+
+app.post("/Manager/Login", checkToken, postManagerLogin);
+
 app.use(
   '/Manager',
   swaggerUi.serve, 
   swaggerUi.setup(swaggerDocument)
 );
 
-app.listen(5000, () => {
+app.listen(5001, () => {
   console.log(" Connected to Manager server");
 });

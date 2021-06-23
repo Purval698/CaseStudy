@@ -1,0 +1,142 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0", 
+    "title": "My Hotel Management System",
+    "description": "My User Project Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:4001",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Reception",
+      "description": "API for Reception in the system"
+    }
+  ],
+  "paths": {
+
+    "/Reception/Guest": {
+        "post": {
+            "tags": ["Guest"],
+            "description": "Add new Guest in system",
+            "parameters": [
+              {
+                "name": "Guest",
+                "in": "body",
+                "description": "Guest that we want to add",
+                "schema": {
+                  "$ref": "#/definitions/Guest"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "New Guest is created",
+                "schema": {
+                  "$ref": "#/definitions/Guest"
+                }
+              }
+            }
+          },
+          "get": {
+            "tags": ["Guest"],
+            "summary": "Get Guest in system",
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Guest"
+                }
+              }
+            }
+          }
+        },
+        "/Reception/Guest/{id}": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "description": "ID of Guest that we want to find",
+              "type": "string"
+            }
+          ],
+          "get": {
+            "summary": "Get Guest with given ID",
+            "tags": ["Guest"],
+            "responses": {
+              "200": {
+                "description": "GuestFound",
+                "schema": {
+                  "$ref": "#/definitions/Guest"
+                }
+              }
+            }
+          },
+          "delete": {
+            "summary": "Delete Guest with given ID",
+            "tags": ["Guest"],
+            "responses": {
+              "200": {
+                "description": "Guest is deleted",
+                "schema": {
+                  "$ref": "#/definitions/Guest"
+                }
+              }
+            }
+          },
+          "put": {
+            "summary": "Update Guest with give ID",
+            "tags": ["Guest"],
+            "parameters": [
+              {
+                "name": "Guest",
+                "in": "body",
+                "description": "Guest with new values of properties",
+                "schema": {
+                  "$ref": "#/definitions/Guest"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Guest is updated",
+                "schema": {
+                  "$ref": "#/definitions/Guest"
+                }
+              }
+            }
+          }
+        }
+  },
+        "definitions":{
+          "Guest": {
+            "properties": {
+              "fullName": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "mobileNum":{
+                  "type":"number"
+              },
+              "age":{
+                "type":"number"
+              },
+              "arrivalDate":{
+                "type":"number"
+              },
+              "departureDate":{
+                "type":"number"
+              }
+            }
+          }
+
+        }}
+
+  
