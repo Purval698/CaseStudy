@@ -1,4 +1,3 @@
-//const room = require("../models/roomType");
 const roomType = require("../models/roomType");
 
 const getRoom = (req, res) => {
@@ -40,7 +39,7 @@ const postRoomType = (req, res) => {
     .save()
     .then(() => {
       console.log("New room added");
-      res.send("succ")
+      res.send("room added successfully")
     })
     .catch((err) => {
       res.status(404).json({ status: "error", message: err.message });

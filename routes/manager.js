@@ -1,7 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const swaggerUi = require("swagger-ui-express"),
- swaggerDocument = require("../swaggerInventoryManager.json");
+ swaggerDocument = require("../swaggerManager.json");
+
 
 const app = express();
 
@@ -71,6 +72,7 @@ app.use(
   swaggerUi.setup(swaggerDocument)
 );
 
-app.listen(5001, () => {
+
+app.listen(2000, () => {
   console.log(" Connected to Manager server");
 });

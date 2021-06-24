@@ -53,6 +53,6 @@ app.use(
   swaggerUi.setup(swaggerDocument)
 );
 
-app.listen(4001, () => {
+app.listen(3000, () => {
   console.log("Reception server is connected");
 });

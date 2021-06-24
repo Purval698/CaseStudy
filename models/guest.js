@@ -3,27 +3,39 @@ const mongoose = require("mongoose");
 module.exports = mongoose.model("Guest", {
   fullName: {
     type: String,
-    require: true
+   required: true
+  },
+  roomNum: {
+    type:Number,
+   required:  true
+  },
+  roomType:{
+    type: String,
+    required:true
   },
   address: {
     type: String,
-    require: true
+   required: true
   },
   mobileNum: {
     type: Number,
-    require: true
+   required: true
   },
   age: {
     type: Number,
-    require: true
+   required: true
   },
   arrivalDate: {
     type: Number,
-    require: true
+   required: true
   },
   departureDate: {
     type: Number,
-    require: true
+   required: true
+  },
+  bill:{
+    type:Number,
+    required: true
   }
   
 });

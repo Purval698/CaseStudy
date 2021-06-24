@@ -27,11 +27,14 @@ const getGuestById = (req, res) => {
 const postGuest = (req, res) => {
   var newGuest = {
     fullName: req.body.fullName,
+    roomNum:req.body.roomNum,
+    roomType: req.body.roomType,
     address: req.body.address,
     mobileNum: req.body.mobileNum,
     age: req.body.age,
     arrivalDate: req.body.arrivalDate,
     departureDate: req.body.departureDate,
+    bill:req.body.bill
   };
 
   var guest = new Guest(newGuest);

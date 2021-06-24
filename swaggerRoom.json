@@ -1,0 +1,134 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0", 
+      "title": "My Hotel Management System",
+      "description": "MyHotel Management System Project Application API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:1000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Room",
+        "description": "API for Owner in the system"
+      }
+    ],
+    "paths": {
+  
+      "/Owner/Room": {
+          "post": {
+              "tags": ["Room"],
+              "description": "Add new Room in system",
+              "parameters": [
+                {
+                  "name": "Room",
+                  "in": "body",
+                  "description": "Owner that we want to add",
+                  "schema": {
+                    "$ref": "#/definitions/Room"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "New Room is created",
+                  "schema": {
+                    "$ref": "#/definitions/Room"
+                  }
+                }
+              }
+            },
+            "get": {
+              "tags": ["Room"],
+              "summary": "Get Room in system",
+              "responses": {
+                "200": {
+                  "description": "OK",
+                  "schema": {
+                    "$ref": "#/definitions/Room"
+                  }
+                }
+              }
+            }
+          },
+          "/Owner/Room/{id}": {
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "ID of Room that we want to find",
+                "type": "string"
+              }
+            ],
+            "get": {
+              "summary": "Get Room with given ID",
+              "tags": ["Room"],
+              "responses": {
+                "200": {
+                  "description": "Room Found",
+                  "schema": {
+                    "$ref": "#/definitions/Room"
+                  }
+                }
+              }
+            },
+            "delete": {
+              "summary": "Deleted Room with given ID",
+              "tags": ["Room"],
+              "responses": {
+                "200": {
+                  "description": "Room is deleted",
+                  "schema": {
+                    "$ref": "#/definitions/Room"
+                  }
+                }
+              }
+            },
+            "put": {
+              "summary": "Update Room with give ID",
+              "tags": ["Room"],
+              "parameters": [
+                {
+                  "name": "Room",
+                  "in": "body",
+                  "description": "Room with new values of properties",
+                  "schema": {
+                    "$ref": "#/definitions/Room"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "Room is updated",
+                  "schema": {
+                    "$ref": "#/definitions/Room"
+                  }
+                }
+              }
+            }
+          }
+    },
+          "definitions":{
+            "Room": {
+              "properties": {
+                "roomType": {
+                  "type": "string"
+                },
+                "roomPrice": {
+                  "type": "number"
+                },
+                "keySpec": {
+                    "type": "string"
+                }
+              }
+            }
+  
+          }}
+  
+    
+  

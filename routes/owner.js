@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const swaggerUi = require("swagger-ui-express"),
+ swaggerDocument = require("../swaggerRoom.json");
 
 const app = express();
 
@@ -10,6 +12,7 @@ const {
 } = require("../controllers/ownerLogin.js");
 
 const mongoose = require("mongoose");
+
 
 const{getRoom,getRoomTypeById,postRoomType,putRoom,deleteRoom} = require("../controllers/roomType")
 
@@ -24,20 +27,26 @@ mongoose.connect(
   }
 );
 
-app.get("/owner/room", getRoom);
+app.get("/Owner/Room", getRoom);
 
-app.get("/owner/room/:id", getRoomTypeById);
+app.get("/Owner/Room/:id", getRoomTypeById);
 
-app.post("/owner/room", postRoomType);
+app.post("/Owner/Room", postRoomType);
 
-app.put("/owner/room/:id", putRoom);
+app.put("/Owner/Room/:id", putRoom);
 
-app.delete("/owner/room/:id",deleteRoom);
+app.delete("/Owner/Room/:id",deleteRoom);
 
-app.post("/owner/SignUp", postOwnerSignUp);
+app.post("/Owner/SignUp", postOwnerSignUp);
 
-app.post("/owner/Login", checkToken, postOwnerLogin);
+app.post("/Owner/Login", checkToken, postOwnerLogin);
 
-app.listen(6000, () => {
+app.use(
+  '/Owner',
+  swaggerUi.serve, 
+  swaggerUi.setup(swaggerDocument)
+);
+
+app.listen(1000, () => {
   console.log("Owner server connected");
 });

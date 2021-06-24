@@ -9,7 +9,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:4001",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -119,6 +119,12 @@
               "fullName": {
                 "type": "string"
               },
+              "roomNum":{
+                "type": "number"
+              },
+              "roomType":{
+                "type": "string"
+              },
               "address": {
                 "type": "string"
               },
@@ -132,6 +138,9 @@
                 "type":"number"
               },
               "departureDate":{
+                "type":"number"
+              },
+              "bill":{
                 "type":"number"
               }
             }
