@@ -7,7 +7,8 @@ module.exports = mongoose.model("Guest", {
   },
   roomNum: {
     type:Number,
-   required:  true
+   required:  true,
+   unique: true
   },
   roomType:{
     type: String,
@@ -19,18 +20,19 @@ module.exports = mongoose.model("Guest", {
   },
   mobileNum: {
     type: Number,
-   required: true
+   required: true,
+   unique: true
   },
   age: {
     type: Number,
    required: true
   },
   arrivalDate: {
-    type: Number,
+    type: String,
    required: true
   },
   departureDate: {
-    type: Number,
+    type: String,
    required: true
   },
   bill:{

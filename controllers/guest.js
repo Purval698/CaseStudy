@@ -11,6 +11,7 @@ const getGuest = (req, res) => {
 };
 
 const getGuestById = (req, res) => {
+  console.log(req.params.id);
   Guest.findById(req.params.id)
     .then((guest) => {
       if (guest) {
@@ -20,6 +21,7 @@ const getGuestById = (req, res) => {
       }
     })
     .catch((err) => {
+      console.log(err);
       res.status(404).json({ status: "error", message: err.message });
     });
 };

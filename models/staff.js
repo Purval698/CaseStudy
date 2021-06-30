@@ -8,6 +8,7 @@ const staff = mongoose.model("Staff", {
   email: {
     type: String,
     required: [true, "Email required"],
+    unique: true
   },
   age: {
     type: String,
@@ -16,7 +17,14 @@ const staff = mongoose.model("Staff", {
   contactNum: {
     type: Number,
     required: [true, "contact of staff required"],
+    maxLength:10,
+    unique: true
   },
+  address: {
+    type: String,
+    Required: [true, "address of Staff Required"]
+
+  }
 });
 
 module.exports = staff;

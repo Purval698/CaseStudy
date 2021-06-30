@@ -1,10 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser')
 const swaggerUi = require("swagger-ui-express"),
  swaggerDocument = require("../swaggerManager.json");
-
-
-const app = express();
 
 const {
   getStaff,
@@ -14,7 +12,6 @@ const {
   deleteStaffById,
 } = require("../controllers/staff.js");
 
-app.use(bodyParser.json());
 
 const {
   getInventory,
@@ -36,43 +33,52 @@ require("../models/staff");
 
 require("../models/inventory");
 
+const app = express();
+
+app.use(cookieParser())
+app.use(bodyParser.json());
+
+
+
+
+
 mongoose.connect(
     "mongodb+srv://Purval-:Shailaja@123@population.mu5nf.mongodb.net/Manager?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Manager database connected"));
 
-app.get("/Manager/Staff",getStaff );
 
-app.get("/Manager/Staff/:id", getStaffById);
 
-app.post("/Manager/Staff", postStaff);
+app.get("/Manager/Staff",checkToken, getStaff );
 
-app.put("/Manager/Staff/:id", putStaffById);
+app.get("/Manager/Staff/:id",checkToken, getStaffById);
 
-app.delete("/Manager/Staff/:id", deleteStaffById);
+app.post("/Manager/Staff", checkToken,postStaff);
 
-app.get("/Manager/Inventory", getInventory);
+app.put("/Manager/Staff/:id",checkToken, putStaffById);
 
-app.get("/Manager/Inventory/:id", getInventoryById);
+app.delete("/Manager/Staff/:id",checkToken, deleteStaffById);
 
-app.post("/Manager/Inventory", postInventory);
+app.get("/Manager/Inventory",checkToken, getInventory);
 
-app.put("/Manager/Inventory/:id",putInventory);
+app.get("/Manager/Inventory/:id",checkToken, getInventoryById);
 
-app.delete("/Manager/Inventory/:id", deleteInventory);
+app.post("/Manager/Inventory",checkToken, postInventory);
+
+app.put("/Manager/Inventory/:id",checkToken,putInventory);
+
+app.delete("/Manager/Inventory/:id",checkToken, deleteInventory);
 
 app.post("/Manager/SignUp", postManagerSignUp);
 
-app.post("/Manager/Login", checkToken, postManagerLogin);
+app.post("/Manager/Login",  postManagerLogin);
 
 app.use(
   '/Manager',
   swaggerUi.serve, 
   swaggerUi.setup(swaggerDocument)
 );
-
-
-app.listen(2000, () => {
+module.exports=app.listen(2001, () => {
   console.log(" Connected to Manager server");
 });

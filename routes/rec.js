@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cookieParser = require('cookie-parser')
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
@@ -7,6 +8,7 @@ const swaggerUi = require("swagger-ui-express"),
  swaggerDocument = require("../swaggerRec.json");
 
 app.use(bodyParser.json());
+app.use(cookieParser())
 
 mongoose.set("useFindAndModify", false);
 
@@ -33,19 +35,19 @@ const {
 } = require("../controllers/receptionLogin.js");
 
 
-app.post("/Reception/Guest", postGuest);
+app.post("/Reception/Guest",checkToken, postGuest);
 
-app.get("/Reception/Guest", getGuest);
+app.get("/Reception/Guest",checkToken, getGuest);
 
-app.get("/Reception/Guest/:id", getGuestById);
+app.get("/Reception/Guest/:id",checkToken, getGuestById);
 
-app.delete("/Reception/Guest/:id", deleteGuest);
+app.delete("/Reception/Guest/:id",checkToken, deleteGuest);
 
-app.put("/Reception/Guest/:id", putGuest);
+app.put("/Reception/Guest/:id",checkToken, putGuest);
 
 app.post("/Reception/SignUp", postReceptionSignUp);
 
-app.post("/Reception/Login", checkToken, postReceptionLogin);
+app.post("/Reception/Login",  postReceptionLogin);
 
 app.use(
   '/Reception',

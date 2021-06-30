@@ -124,6 +124,9 @@
                 },
                 "keySpec": {
                     "type": "string"
+                },
+                "roomNum":{
+                  "type": "number"
                 }
               }
             }

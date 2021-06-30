@@ -111,6 +111,30 @@
               }
             }
           }
+        },
+        "/Reception/Login": {
+          "post": {
+            "tags": ["Login"],
+            "description": "Add new Staff in system",
+            "parameters": [
+              {
+                "name": "Manager",
+                "in": "body",
+                "description": "Staff that we want to add",
+                "schema": {
+                  "$ref": "#/definitions/Login"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "New Staff is created",
+                "schema": {
+                  "$ref": "#/definitions/Login"
+                }
+              }
+            }
+          }
         }
   },
         "definitions":{
@@ -144,8 +168,20 @@
                 "type":"number"
               }
             }
+          },
+          "Login": {
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+
+              "password": {
+                "type": "string"
+              }
+            }
           }
 
-        }}
+        }
+      }
 
   

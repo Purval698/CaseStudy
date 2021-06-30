@@ -34,8 +34,8 @@ const postInventory = (req, res) => {
   var inventory = new Inventory(newInventory);
   inventory
     .save()
-    .then(() => {
-      console.log("New inventory added");
+    .then((data) => {
+      res.status(201).json({ status: "success", message: "New inventory added", data });
     })
     .catch((err) => {
       res.status(404).json({ status: "error", message: err.message });

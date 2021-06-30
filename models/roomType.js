@@ -13,6 +13,10 @@ keySpec:{
     type: String,
     required: true,
   },
+  roomNum:{
+    type: Number,
+    required: true
+  }
 });
 
 module.exports = room;

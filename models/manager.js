@@ -20,7 +20,7 @@ ManagerModel = mongoose.model("manager", {
   },
   hashedPassword: {
     type: String,
-    require: true,
+    required: true,
   }
 });
 
