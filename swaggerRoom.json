@@ -111,6 +111,30 @@
                 }
               }
             }
+          },
+          "/Owner/Login": {
+            "post": {
+              "tags": ["Owner Login"],
+              "description": "Owner Login",
+              "parameters": [
+                {
+                  "name": "Owner",
+                  "in": "body",
+                  "description": "Owner Login",
+                  "schema": {
+                    "$ref": "#/definitions/Login"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "New Staff is created",
+                  "schema": {
+                    "$ref": "#/definitions/Login"
+                  }
+                }
+              }
+            }
           }
     },
           "definitions":{
@@ -129,9 +153,21 @@
                   "type": "number"
                 }
               }
+            },
+            "Login": {
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+  
+                "password": {
+                  "type": "string"
+                }
+              }
             }
   
-          }}
+          }
+        }
   
     
   

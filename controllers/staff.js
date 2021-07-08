@@ -1,10 +1,9 @@
 const Staff = require("../models/staff");
 
 const getStaff = (req, res) => {
-  
   Staff.find()
     .then((data) => {
-      res.json({ status: "success", data });
+      res.status(200).json({ status: "success", data });
     })
     .catch((err) => {
       res.send(404).json({ status: "error", message: err.message });
@@ -12,9 +11,12 @@ const getStaff = (req, res) => {
 };
 
 const getStaffById = (req, res) => {
-  
   Staff.findById(req.params.id)
     .then((data) => {
+      if (!data)
+        return res
+          .status(404)
+          .json({ status: "error", message: "id not found" });
       res.status(200).json({ status: "success", data });
     })
     .catch((err) => {
@@ -28,17 +30,17 @@ const postStaff = (req, res) => {
     email: req.body.email,
     age: req.body.age,
     contactNum: req.body.contactNum,
-    address: req.body.address
+    address: req.body.address,
   };
 
   Staff.create(newstaff)
     .then((data) => {
       res
-        .status(200)
+        .status(201)
         .json({ status: "success", message: "Successfully added", data });
     })
     .catch((err) => {
-      res.status(409).json({ status: "error", message: err.message });
+      res.status(404).json({ status: "error", message: err.message });
     });
 };
 
@@ -47,7 +49,7 @@ const putStaffById = (req, res) => {
     .then(() => {
       res.status(200).json({
         status: "success",
-        message: "staff details has been updated"
+        message: "staff details has been updated",
       });
     })
     .catch((err) => {
@@ -56,17 +58,30 @@ const putStaffById = (req, res) => {
 };
 
 const deleteStaffById = (req, res) => {
-  Staff.findByIdAndDelete({ _id: req.params.id })
+  const id = req.params.id;
+  Staff.findById(id)
     .then((data) => {
-      res.status(200).json({
-        status: "success",
-        message: "staff details has been deleted",
-        data,
-      });
+      if (!data)
+        return res.status(404).json({
+          status: "error",
+          message: "id not found",
+        });
+
+      Staff.findByIdAndDelete(id)
+        .then((data) => {
+          res.status(200).json({
+            status: "success",
+            message: "staff details has been deleted",
+            data,
+          });
+        })
+        .catch((err) => {
+          res.status(404).json({ status: "error", message: err.message });
+        });
     })
-    .catch((err) => {
-      res.status(404).json({ status: "error", message: err.message });
-    });
+    .catch((err) =>
+      res.status(404).json({ status: "error", message: err.message })
+    );
 };
 
 module.exports = {

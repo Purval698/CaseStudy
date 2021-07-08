@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 
 const ReceptionModel = require("../models/reception");
-require("dotenv").config({ path: "../.env" });
 
 const postReceptionSignUp = async (req, res) => {
   const { email, password } = req.body;
@@ -45,7 +44,7 @@ const postReceptionLogin = async (req, res) => {
       return;
     }
   } catch (err) {
-    res.status(400).json({ status: "Error", message: err.message });
+    return res.status(400).json({ status: "Error", message: err.message });
   }
 
   const token = jwt.sign(
@@ -64,6 +63,7 @@ const postReceptionLogin = async (req, res) => {
   res.status(200).send({
     status: "success",
     message: "Successfully logged",
+    token,
   });
 };
 
@@ -78,7 +78,7 @@ const checkToken = (req, res, next) => {
   if (!token)
     return res.status(401).json({
       status: "unauthorized",
-      message: "Access token is missing or invalid",
+      message: "please log in your account",
     });
 
   try {

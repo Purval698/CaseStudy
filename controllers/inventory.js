@@ -44,8 +44,11 @@ const postInventory = (req, res) => {
 
 const putInventory = (req, res) => {
   Inventory.findByIdAndUpdate(req.params.id, req.body)
-    .then(() => {
-      res.send("Inventorydetails has been updated");
+    .then(() =>  {
+      res.status(200).json({
+        status: "success",
+        message: "Inventorydetails has been updated"
+      });
     })
     .catch((err) => {
       res.status(404).json({ status: "error", message: err.message });
@@ -53,10 +56,14 @@ const putInventory = (req, res) => {
 };
 
 const deleteInventory = (req, res) => {
-  Inventory.findByIdAndRemove({ _id: req.params.id })
-    .then(() => {
-      res.send("Inventory has been removed");
-    })
+  Inventory.findByIdAndDelete({ _id: req.params.id })
+  .then((data) => {
+    res.status(200).json({
+      status: "success",
+      message: "Inventory has been removed",
+      data,
+    });
+  })
     .catch((err) => {
       res.status(404).json({ status: "error", message: err.message });
     });

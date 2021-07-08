@@ -16,7 +16,11 @@ keySpec:{
   roomNum:{
     type: Number,
     required: true
-  }
+  },
+  available: {
+    type: Boolean,
+    default:true
+}
 });
 
 module.exports = room;

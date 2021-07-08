@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 
 const ManagerModel = require("../models/manager");
-require("dotenv").config({ path: "../.env" });
+
 
 const postManagerSignUp = async (req, res) => {
   const { email, password } = req.body;
@@ -46,24 +46,26 @@ const postManagerLogin = async (req, res) => {
     }
   } catch (err) {
     res.status(400).json({ status: "Error", message: err.message });
+    return;
   }
 
   const token = jwt.sign(
     {
-      exp: Math.floor(Date.now() / 1000) + 60 * 5, //seconds
-      data: { email, role: "Manager" },
+      exp: Math.floor(Date.now() / 1000) +5*60, //seconds
+      data: { email, role: "Manager" }
     },
     process.env.SECREATE_CODE
   );
 
   res.cookie("token", token, {
-    maxAge: 60 * 1000 * 5, //miliseconds
+    maxAge: 60*5*1000, //miliseconds
     httpOnly: true,
   });
 
   res.status(200).send({
     status: "success",
-    message: "Successfully logged",
+    message: "Welcome Manager",
+    token
   });
 };
 

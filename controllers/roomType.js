@@ -32,7 +32,8 @@ const postRoomType = (req, res) => {
     roomType:req.body.roomType,
     roomPrice:req.body.roomPrice,
     keySpec:req.body.keySpec,
-    roomNum:req.body.roomNum
+    roomNum:req.body.roomNum,
+    available:req.body.available
   };
 
   var room = new roomType(newRoom);

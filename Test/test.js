@@ -1,162 +1,206 @@
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+const chalk = require("chalk");
 
-constchai = require('chai');
-constchaiHttp = require('chai-http');
-constserver=require("../routes/manager");
-let server = "http://localhost:2001"
+const server = "http://localhost:2001";
 
- 
-chai.should(); 
-
+chai.should();
 chai.use(chaiHttp);
 
-describe('Get /Manager/Staff',()=>{​​​​​​​​
-it('it should get all data',(done)=>{​​​​​​​​
-chai.request(server)
-        .get('/Manager/Staff')
-        .end((err,response)=>{​​​​​​​​
-response.should.have.status(200);
-response.body.should.be.a('object');
-// response.body.length.should.be.eq(3);
-done();
-        }​​​​​​​​)
-    }​​​​​​​​);
-it("It should NOT GET all the tasks", (done) => {​​​​​​​​
-chai.request(server)
-            .get("/Manager/Staffs")
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(404);
-done();
-            }​​​​​​​​);
-    }​​​​​​​​);
- 
-}​​​​​​​​);
-describe("GET /Manager/Staff/:id", () => {​​​​​​​​
-it("It should GET a task by ID", (done) => {​​​​​​​​
-consttaskId = "60cbb031a52dd6251013d814";
-chai.request(server)                
-            .get("/Manager/Staff/" + taskId)
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(200);
-response.body.should.be.a('object');
-response.body.should.have.property('_id');
-response.body.should.have.property('mode');
-done();
-            }​​​​​​​​);
-    }​​​​​​​​),
-it("It should NOT GET a task by ID", (done) => {​​​​​​​​
-consttaskId = "12355984589748";
-chai.request(server)                
-            .get("/Manager/Staff/" + taskId)
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(400);
-done();
-            }​​​​​​​​);
-    }​​​​​​​​);
- 
-}​​​​​​​​);
-describe("POST /Manager/Staff/", () => {​​​​​​​​
-it("It should POST a new task", (done) => {​​​​​​​​
-consttask = {​​​​​​​​
-roomNumber: 50,
-mode: "amit",
-amount: 500,
-date: "500",
-time: "50"
-        }​​​​​​​​;
-chai.request(server)                
-            .post("/Manager/Staff/")
-            .send(task)
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(200);
-response.body.should.be.a('object');
-// response.body.should.have.property('_id');
-done();
-            }​​​​​​​​);
-    }​​​​​​​​);
- 
-it("It should NOT POST a new task without the name property", (done) => {​​​​​​​​
-consttask = {​​​​​​​​
-completed: false
-        }​​​​​​​​;
-chai.request(server)                
-            .post("/Manager/Staff/")
-            .send(task)
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(404);
-done();
-            }​​​​​​​​);
-    }​​​​​​​​);
-}​​​​​​​​);
+let token = "";
+let staffId = "";
 
-    
+describe("Post /Manager/Login", () => {
+  it("it should login manager", (done) => {
+    const loginCredentials = {
+      email: "manager@gmail.com",
+      password: "Manager@123",
+    };
 
-describe("PUT /Manager/Staff/:id", () => {​​​​​​​​
-it("It should PUT an existing task", (done) => {​​​​​​​​
-consttaskId = "60d85aa031ad441f5cadb066";
-consttask = {​​​​​​​​
-staffName:"hajdhjahdk",
-email:"aghdgjhagjh@gmail.com",
-age:"35",
-contactNum:9898090909
-        }​​​​​​​​;
-chai.request(server)                
-            .put("/Manager/Staff/" + taskId)
-            .send(task)
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(200);
-response.body.should.be.a('object');
-response.body.should.have.property('_id').eq("60d85aa031ad441f5cadb066");
-// response.body.should.have.property('mode');
-done();
-            }​​​​​​​​);
-    }​​​​​​​​);
- 
-it("It should NOT PUT", (done) => {​​​​​​​​
-consttaskId = "60d246cb6809f2e7";
-consttask = {​​​​​​​​
-roomNumber: 50,
-mode: "online",
-amount: 500,
-date: "500",
-time: "50"
-        }​​​​​​​​;
-chai.request(server)                
-            .put("/payment/update/" + taskId)
-            .send(task)
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(400);
-done();
-            }​​​​​​​​);
-    }​​​​​​​​);        
-}​​​​​​​​);
+    chai
+      .request(server)
+      .post("/Manager/Login")
+      .send(loginCredentials)
+      .end((err, res) => {
+        token = res.body.token;
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have.property("message").eql("Welcome Manager");
+        done();
+      });
+  });
+});
 
+describe("Get /Manager/Staff", () => {
+  it("it should get all data", (done) => {
+    chai
+      .request(server)
+      .get("/Manager/Staff")
+      .set("Cookie", "token=" + token + "; Path=/; HttpOnly;")
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have.property("data").be.a("array");
+        done();
+      });
+  });
+});
 
- 
-/**
- * Test the DELETE route
- */
-describe("DELETE /Manager/Staff//:id", () => {​​​​​​​​
-it("It should DELETE an existing task", (done) => {​​​​​​​​
-consttaskId = "60d86c3e1be1a64474a15ce9";
-chai.request(server)                
-            .delete("/Manager/Staff/" + taskId)
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(200);
-done();
-            }​​​​​​​​);
-    }​​​​​​​​);
- 
-it("It should NOT DELETE a task that is not in the database", (done) => {​​​​​​​​
-consttaskId = "12558521";
-chai.request(server)                
-            .delete("/Manager/Staff/" + taskId)
-            .end((err, response) => {​​​​​​​​
-response.should.have.status(404);
-done();
-            }​​​​​​​​);
-    }​​​​​​​​);
- 
-}​​​​​​​​);
+describe("post /Manager/Staff", () => {
+  it("it should post data", (done) => {
+    const staffData = {
+      staffName: "Batman",
+      email: "abc@gmail.com",
+      age: 23,
+      contactNum: 824278361,
+      address: "Gotham",
+    };
 
+    chai
+      .request(server)
+      .post("/Manager/Staff")
+      .set("Cookie", "token=" + token + "; Path=/; HttpOnly;")
+      .send(staffData)
+      .end((err, res) => {
+        staffId = res.body.data._id;
+        res.should.have.status(201);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have.property("message").eql("Successfully added");
+        res.body.data.should.have
+          .property("staffName")
+          .eql(staffData.staffName);
+        done();
+      });
+  });
+});
 
+// put Staff
+describe("/Manager/Staff/:id", () => {
+  it("it should UPDATE a staff given the id", (done) => {
+    const demo = {
+      staffName: "Abir",
+      age: 19,
+    };
+    chai
+      .request(server)
+      .put("/Manager/Staff/" + staffId)
+      .set("Cookie", "token=" + token + ";")
+      .send(demo)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have
+          .property("message")
+          .eql("staff details has been updated");
+        done();
+      });
+  });
+});
 
+describe("/Manager/Staff/:id staff", () => {
+  it("it should DELETE a staff with given the id", (done) => {
+    chai
+      .request(server)
+      .delete("/Manager/Staff/" + staffId)
+      .set("Cookie", "token=" + token + "; Path=/; HttpOnly;")
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have
+          .property("message")
+          .eql("staff details has been deleted");
+        done();
+      });
+  });
+});
+
+// // //// Inventory Testing
+
+describe("Get /Manager/Inventory", () => {
+  it("it should get all data", (done) => {
+    chai
+      .request(server)
+      .get("/Manager/Inventory")
+      .set("Cookie", "token=" + token + "; Path=/; HttpOnly;")
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have.property("data").be.a("array");
+        done();
+      });
+  });
+});
+
+describe("post /Manager/Inventory", () => {
+  it("it should post data", (done) => {
+    const inventoryData = {
+      roomNum: "102",
+      inventoryName: "dummyInvnetory",
+      quantity: 2,
+    };
+
+    chai
+      .request(server)
+      .post("/Manager/Inventory")
+      .set("Cookie", "token=" + token + "; Path=/; HttpOnly;")
+      .send(inventoryData)
+      .end((err, res) => {
+        inventoryId = res.body.data._id;
+        res.should.have.status(201);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have.property("message").eql("New inventory added");
+        res.body.data.should.have
+          .property("inventoryName")
+          .eql(inventoryData.inventoryName);
+        done();
+      });
+  });
+});
+
+// // Put request
+describe("/Manager/Inventory/:id", () => {
+  it("it should UPDATE a staff given the id", (done) => {
+    const demo = {
+      inventoryName: "dummyInventory",
+    };
+    chai
+      .request(server)
+      .put("/Manager/Inventory/" + inventoryId)
+      .set("Cookie", "token=" + token + ";")
+      .send(demo)
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have
+          .property("message")
+          .eql("Inventorydetails has been updated");
+        done();
+      });
+  });
+});
+
+describe("/Manager/Inventory/:id staff", () => {
+  it("it should DELETE a Inventory with given the id", (done) => {
+    chai
+      .request(server)
+      .delete("/Manager/Inventory/" + inventoryId)
+      .set("Cookie", "token=" + token + "; Path=/; HttpOnly;")
+      .end((err, res) => {
+        res.should.have.status(200);
+        res.body.should.be.a("object");
+        res.body.should.have.property("status").eql("success");
+        res.body.should.have
+          .property("message")
+          .eql("Inventory has been removed");
+        done();
+      });
+  });
+});

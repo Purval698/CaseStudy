@@ -5,8 +5,8 @@
     "title": "My Hotel Management System",
     "description": "My User Project Application API",
     "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
+      "name": "Pay Here",
+      "url": "http://localhost:4000/payments"
     }
   },
   "host": "localhost:3000",
@@ -21,7 +21,7 @@
 
     "/Reception/Guest": {
         "post": {
-            "tags": ["Guest"],
+            "tags": ["Guest Reservation"],
             "description": "Add new Guest in system",
             "parameters": [
               {
@@ -159,10 +159,10 @@
                 "type":"number"
               },
               "arrivalDate":{
-                "type":"number"
+                "type":"string"
               },
               "departureDate":{
-                "type":"number"
+                "type":"string"
               },
               "bill":{
                 "type":"number"
